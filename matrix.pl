@@ -1,14 +1,14 @@
 #!/usr/bin/env perl
 # by William Hofferbert
 # a terminal screen wasting utility
-use strict;          # good form
-use warnings;        # also good form
-use 5.010;           # say
-use Term::ANSIColor; # colors
-use Term::ReadKey;   # GetTerminalSize
-use Term::Cap;       # Tgetent
+use strict;			# good form
+use warnings;			# also good form
+use 5.010;			# say
+use Term::ANSIColor;		# colors
+use Term::ReadKey;		# GetTerminalSize
+use Term::Cap;			# Tgetent
 use Time::HiRes qw(sleep time);
-use Getopt::Long;    # opts
+use Getopt::Long;		# opts
 
 #
 # env
@@ -16,7 +16,7 @@ use Getopt::Long;    # opts
 
 my $min_bar_length   = 5;
 my $max_bar_length   = 15;
-my $sleep_secs       = 0.1;
+my $sleep_secs       = 0.09;
 my $bar_density_mod  = 14; # max possible num bars to make at once if we are short
 my $bar_speed_mod    = 3;
 my $speedmod_gov     = 7;  # (int(rand($speedmod_gov - $bar_speed_mod)) % $bar_speed_mod); = speedcontrol
@@ -62,14 +62,16 @@ my $bar_index = 0;
 
 sub help {
   my $help = qq{
-  A perl-y implementation of a hacker-kinda terminal screensaver/screenwaster.
+  A perl implementation of a hacker-kinda terminal screen saver/screen waster.
 
-    Usage: $0 [options if desired]
+    Usage: $0 -[options]
 
   Options:
 
-    sleep-secs|sleep|s [float]     Specify a float that is the value to sleep between character prints.
-                                        Currently $sleep_secs
+    sleep-secs|sleep|s [float]     Specify a float that is the value to sleep 
+                                   between screen prints. Smaller numbers =
+                                   faster falling text.
+                                   Currently $sleep_secs
 
     help|h                         Print this help text
 
@@ -154,8 +156,8 @@ sub mangle_bars {
   # thanks to all the terminal emulators
   # being as glitchy as they are... 
   # I wanted this to flip flop some chars
-  # and colors. It's been taken care of 
-  # for me. so lucky ...   :|
+  # and colors. terminal takes care of that
+  # for me. so lucky ... :/
 }
 
 sub advance_bars {
@@ -193,7 +195,7 @@ sub remove_old_bars {
 sub build_screen {
   @lines = (); # clear lines array
   foreach my $y (0 .. $hchar - 2) {
-    my $line;
+    my $line = "";
     foreach my $x (0 .. $wchar - 1) {
       if (exists $xy{$y}{$x}) {
         $line = $line . $xy{$y}{$x};
