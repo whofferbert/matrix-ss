@@ -19,14 +19,16 @@ Getopt::Long
 ```bash
 $ ./matrix.pl -h
 
-  A perl-y implementation of a hacker-kinda terminal screensaver/screenwaster.
+  A perl implementation of a hacker-kinda terminal screen saver/screen waster.
 
-    Usage: ./matrix.pl [options if desired]
+    Usage: ./matrix.pl -[options]
 
   Options:
 
-    sleep-secs|sleep|s [float]     Specify a float that is the value to sleep between character prints.
-                                        Currently 0.1
+    sleep-secs|sleep|s [float]     Specify a float that is the value to sleep 
+                                   between screen prints. Smaller numbers =
+                                   faster falling text.
+                                   Currently 0.09
 
     help|h                         Print this help text
 
